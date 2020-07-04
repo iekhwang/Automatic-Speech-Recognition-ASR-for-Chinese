@@ -54,4 +54,4 @@ If you have problem with hyperparameters, you can check with ```python DeepSpeec
 
 ---------
 
-If you have any problems with DeepSpeech v0.7.0, please do not hesitate to contact me iekhwang@outlook.com .
+If you have any problems with DeepSpeech v0.6.0-alpha.4, please do not hesitate to contact me iekhwang@outlook.com .
