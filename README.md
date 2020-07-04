@@ -6,7 +6,7 @@ This project is for the current avilable open-source end-to-end Mandarin ASRs,in
 1.Architectures
 -----
 
-- [DeepSpeech](https://github.com/mozilla/DeepSpeech) 
+- [Mozilla DeepSpeech](https://github.com/mozilla/DeepSpeech) 
 
 - [ESPnet](https://github.com/espnet/espnet) 
 
@@ -18,4 +18,21 @@ This project is for the current avilable open-source end-to-end Mandarin ASRs,in
 
 2.Open-Source Mandarin datasets
 -------
+
+- [THCHS-30](https://www.openslr.org/18/)
+
+- [Aishell-1](https://www.openslr.org/33/)
+
+- [Aishell-2](http://www.aishelltech.com/aishell_2) ( Need to apply )
+
+- [Free ST Chinese Mandarin Corpus](https://www.openslr.org/38/)
+
+- [Primewords Chinese Corpus Set 1](https://www.openslr.org/47/)
+ 
+- [aidatatang_200zh](https://www.openslr.org/62/)
+
+- [MAGICDATA Mandarin Chinese Read Speech Corpus](https://www.openslr.org/68/)
+
+- [Mozilla Common Voice](https://voice.mozilla.org/de/datasets)
+
 
