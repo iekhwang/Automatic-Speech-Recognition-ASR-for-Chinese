@@ -5,7 +5,7 @@ DeepSpeech is an open source Speech-To-Text engine, using a model trained by mac
 
 Recipe
 ------
-See [Recipe](recipe/)
+The version of v0.6.0-alpha.4 has the best results. See [Recipe](recipe/)
 
 Results
 ------
