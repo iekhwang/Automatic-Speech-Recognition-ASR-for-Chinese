@@ -6,7 +6,8 @@ This project is for the current avilable open-source end-to-end Mandarin ASRs,in
 1.Architectures
 -----
 
-- [Mozilla DeepSpeech](https://github.com/mozilla/DeepSpeech) 
+- [Mozilla DeepSpeech](https://github.com/mozilla/DeepSpeech)  
+Please check the recipe for Mandarin -> [recipe for DeepSpeech](Mozilla_DeepSpeech/)
 
 - [ESPnet](https://github.com/espnet/espnet) 
 
@@ -23,7 +24,7 @@ This project is for the current avilable open-source end-to-end Mandarin ASRs,in
 
 - [Aishell-1](https://www.openslr.org/33/)
 
-- [Aishell-2](http://www.aishelltech.com/aishell_2) ( Need to apply )
+- [Aishell-2](http://www.aishelltech.com/aishell_2) **( Need to apply )**
 
 - [Free ST Chinese Mandarin Corpus](https://www.openslr.org/38/)
 
@@ -35,4 +36,5 @@ This project is for the current avilable open-source end-to-end Mandarin ASRs,in
 
 - [Mozilla Common Voice](https://voice.mozilla.org/de/datasets)
 
+- [HKUST](https://catalog.ldc.upenn.edu/LDC2005S15) **(Charged)**
 
