@@ -1,4 +1,7 @@
-Aishell-1 results
+ESPnet
+========
+
+1.Aishell-1 results
 ------
 
 ```
@@ -10,3 +13,11 @@ write a CER (or TER) result in exp/train_sp_pytorch_train/decode_dev_decode_lm_4
       | SPKR   | # Snt  # Wrd | Corr    Sub    Del    Ins    Err  S.Err |
       | Sum/Avg|14326  205341 | 94.1    5.8    0.2    0.1    6.0   42.0 |
 ```
+- **Training Loss**
+
+![image](https://github.com/iekhwang/end2end-asrs-for-Mandarin/raw/master/ESPnet/figures/Aishell_loss.png)
+
+- **Accurracy**
+
+
+![image](https://github.com/iekhwang/end2end-asrs-for-Mandarin/raw/master/ESPnet/figures/Aishell_acc.png)
