@@ -1,0 +1,183 @@
+➜  asr1 git:(master) ✗ ./run.sh --backend pytorch
+stage -1: Data Download
+local/download_and_untar.sh: data part data_aishell was already successfully extracted, nothing to do.
+local/download_and_untar.sh: data part resource_aishell was already successfully extracted, nothing to do.
+stage 0: Data preparation
+Preparing data/local/train transcriptions
+Preparing data/local/dev transcriptions
+Preparing data/local/test transcriptions
+local/aishell_data_prep.sh: AISHELL data preparation succeeded
+stage 1: Feature Generation
+steps/make_fbank_pitch.sh --cmd run.pl --nj 32 --write_utt2num_frames true data/train exp/make_fbank/train fbank
+steps/make_fbank_pitch.sh: moving data/train/feats.scp to data/train/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/train
+steps/make_fbank_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+steps/make_fbank_pitch.sh: Succeeded creating filterbank and pitch features for train
+fix_data_dir.sh: kept all 120098 utterances.
+fix_data_dir.sh: old files are kept in data/train/.backup
+steps/make_fbank_pitch.sh --cmd run.pl --nj 10 --write_utt2num_frames true data/dev exp/make_fbank/dev fbank
+steps/make_fbank_pitch.sh: moving data/dev/feats.scp to data/dev/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/dev
+steps/make_fbank_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+steps/make_fbank_pitch.sh: Succeeded creating filterbank and pitch features for dev
+fix_data_dir.sh: kept all 14326 utterances.
+fix_data_dir.sh: old files are kept in data/dev/.backup
+steps/make_fbank_pitch.sh --cmd run.pl --nj 10 --write_utt2num_frames true data/test exp/make_fbank/test fbank
+steps/make_fbank_pitch.sh: moving data/test/feats.scp to data/test/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/test
+steps/make_fbank_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+steps/make_fbank_pitch.sh: Succeeded creating filterbank and pitch features for test
+fix_data_dir.sh: kept all 7176 utterances.
+fix_data_dir.sh: old files are kept in data/test/.backup
+utils/perturb_data_dir_speed.sh: generated speed-perturbed version of data in data/train, in data/temp1
+utils/validate_data_dir.sh: Successfully validated data-directory data/temp1
+utils/perturb_data_dir_speed.sh: generated speed-perturbed version of data in data/train, in data/temp2
+utils/validate_data_dir.sh: Successfully validated data-directory data/temp2
+utils/perturb_data_dir_speed.sh: generated speed-perturbed version of data in data/train, in data/temp3
+utils/validate_data_dir.sh: Successfully validated data-directory data/temp3
+utils/combine_data.sh --extra-files utt2uniq data/train_sp data/temp1 data/temp2 data/temp3
+utils/combine_data.sh: combined utt2uniq
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh: combined utt2dur
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh: combined reco2dur
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 360294 utterances.
+fix_data_dir.sh: old files are kept in data/train_sp/.backup
+steps/make_fbank_pitch.sh --cmd run.pl --nj 32 --write_utt2num_frames true data/train_sp exp/make_fbank/train_sp fbank
+utils/validate_data_dir.sh: Successfully validated data-directory data/train_sp
+steps/make_fbank_pitch.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+steps/make_fbank_pitch.sh: Succeeded creating filterbank and pitch features for train_sp
+fix_data_dir.sh: kept all 360294 utterances.
+fix_data_dir.sh: old files are kept in data/train_sp/.backup
+compute-cmvn-stats scp:data/train_sp/feats.scp data/train_sp/cmvn.ark 
+LOG (compute-cmvn-stats[5.5.0~1-67db]:main():compute-cmvn-stats.cc:168) Wrote global CMVN stats to data/train_sp/cmvn.ark
+LOG (compute-cmvn-stats[5.5.0~1-67db]:main():compute-cmvn-stats.cc:171) Done accumulating CMVN stats for 360294 utterances; 0 had errors.
+/espnet/egs/aishell/asr1/../../../utils/dump.sh --cmd run.pl --nj 32 --do_delta false data/train_sp/feats.scp data/train_sp/cmvn.ark exp/dump_feats/train dump/train_sp/deltafalse
+/espnet/egs/aishell/asr1/../../../utils/dump.sh --cmd run.pl --nj 10 --do_delta false data/dev/feats.scp data/train_sp/cmvn.ark exp/dump_feats/recog/dev dump/dev/deltafalse
+/espnet/egs/aishell/asr1/../../../utils/dump.sh --cmd run.pl --nj 10 --do_delta false data/test/feats.scp data/train_sp/cmvn.ark exp/dump_feats/recog/test dump/test/deltafalse
+dictionary: data/lang_1char/train_sp_units.txt
+stage 2: Dictionary and Json Data Preparation
+make a dictionary
+4231 data/lang_1char/train_sp_units.txt
+make json files
+/espnet/egs/aishell/asr1/../../../utils/data2json.sh --feat dump/train_sp/deltafalse/feats.scp data/train_sp data/lang_1char/train_sp_units.txt
+/espnet/egs/aishell/asr1/../../../utils/feat_to_shape.sh --cmd run.pl --nj 1 --filetype  --preprocess-conf  --verbose 0 dump/train_sp/deltafalse/feats.scp data/train_sp/tmp-54ISH/input_1/shape.scp
+/espnet/egs/aishell/asr1/../../../utils/data2json.sh --feat dump/dev/deltafalse/feats.scp data/dev data/lang_1char/train_sp_units.txt
+/espnet/egs/aishell/asr1/../../../utils/feat_to_shape.sh --cmd run.pl --nj 1 --filetype  --preprocess-conf  --verbose 0 dump/dev/deltafalse/feats.scp data/dev/tmp-5F3Oz/input_1/shape.scp
+sym2int.pl: replacing 斡 with 1
+sym2int.pl: replacing 沂 with 1
+sym2int.pl: replacing 绢 with 1
+sym2int.pl: replacing 髌 with 1
+sym2int.pl: replacing 湄 with 1
+sym2int.pl: replacing 圃 with 1
+sym2int.pl: replacing 柚 with 1
+sym2int.pl: replacing 柚 with 1
+sym2int.pl: replacing 柚 with 1
+sym2int.pl: replacing 圃 with 1
+sym2int.pl: replacing 荇 with 1
+sym2int.pl: replacing 芪 with 1
+sym2int.pl: replacing 薙 with 1
+sym2int.pl: replacing 潦 with 1
+sym2int.pl: replacing 鲤 with 1
+sym2int.pl: replacing 涟 with 1
+sym2int.pl: replacing 筏 with 1
+sym2int.pl: replacing 筏 with 1
+sym2int.pl: replacing 筏 with 1
+sym2int.pl: replacing 锚 with 1
+sym2int.pl: not warning for OOVs any more times
+** Replaced 110 instances of OOVs with 1
+/espnet/egs/aishell/asr1/../../../utils/data2json.sh --feat dump/test/deltafalse/feats.scp data/test data/lang_1char/train_sp_units.txt
+/espnet/egs/aishell/asr1/../../../utils/feat_to_shape.sh --cmd run.pl --nj 1 --filetype  --preprocess-conf  --verbose 0 dump/test/deltafalse/feats.scp data/test/tmp-Rn0Qp/input_1/shape.scp
+sym2int.pl: replacing 甯 with 1
+sym2int.pl: replacing 甯 with 1
+sym2int.pl: replacing 甯 with 1
+sym2int.pl: replacing 埕 with 1
+sym2int.pl: replacing 甯 with 1
+sym2int.pl: replacing 藕 with 1
+sym2int.pl: replacing 祎 with 1
+sym2int.pl: replacing 祎 with 1
+sym2int.pl: replacing 甯 with 1
+sym2int.pl: replacing 垭 with 1
+sym2int.pl: replacing 纾 with 1
+sym2int.pl: replacing 疙 with 1
+sym2int.pl: replacing ｂ with 1
+sym2int.pl: replacing 垡 with 1
+sym2int.pl: replacing 疡 with 1
+sym2int.pl: replacing 嗪 with 1
+sym2int.pl: replacing 雹 with 1
+sym2int.pl: replacing 淅 with 1
+sym2int.pl: replacing 谶 with 1
+sym2int.pl: replacing 诏 with 1
+sym2int.pl: not warning for OOVs any more times
+** Replaced 51 instances of OOVs with 1
+stage 3: LM Preparation
+=== 1/5 Counting and sorting n-grams ===
+Reading /espnet/egs/aishell/asr1/data/local/lm_train/train.txt
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Unigram tokens 1730113 types 4233
+=== 2/5 Calculating and sorting adjusted counts ===
+Chain sizes: 1:50796 2:18393100288 3:34487062528 4:55179300864
+Statistics:
+1 4233 D1=0.520495 D2=0.901923 D3+=1.35734
+2 279142 D1=0.690031 D2=1.14401 D3+=1.54682
+3 803596 D1=0.81393 D2=1.19846 D3+=1.45279
+4 1139347 D1=0.810992 D2=1.3375 D3+=1.58436
+Memory estimate for binary LM:
+type       kB
+probing 45511 assuming -p 1.5
+probing 51872 assuming -r models -p 1.5
+trie    19005 without quantization
+trie     9599 assuming -q 8 -b 8 quantization 
+trie    17279 assuming -a 22 array pointer compression
+trie     7873 assuming -a 22 -q 8 -b 8 array pointer compression and quantization
+=== 3/5 Calculating and sorting initial probabilities ===
+Chain sizes: 1:50796 2:4466272 3:16071920 4:27344328
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+####################################################################################################
+=== 4/5 Calculating and writing order-interpolated probabilities ===
+Chain sizes: 1:50796 2:4466272 3:16071920 4:27344328
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+####################################################################################################
+=== 5/5 Writing ARPA model ===
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+Name:lmplz	VmPeak:105702896 kB	VmRSS:53192 kB	RSSMax:21157028 kB	user:4.204	sys:10.008	CPU:14.2133	real:13.6732
+Reading exp/train_ngram/4gram.arpa
+----5---10---15---20---25---30---35---40---45---50---55---60---65---70---75---80---85---90---95--100
+****************************************************************************************************
+SUCCESS
+stage 4: Network Training
+
+stage 5: Decoding
+average over ['exp/train_sp_pytorch_train/results/snapshot.ep.41', 'exp/train_sp_pytorch_train/results/snapshot.ep.42', 'exp/train_sp_pytorch_train/results/snapshot.ep.43', 'exp/train_sp_pytorch_train/results/snapshot.ep.44', 'exp/train_sp_pytorch_train/results/snapshot.ep.45', 'exp/train_sp_pytorch_train/results/snapshot.ep.46', 'exp/train_sp_pytorch_train/results/snapshot.ep.47', 'exp/train_sp_pytorch_train/results/snapshot.ep.48', 'exp/train_sp_pytorch_train/results/snapshot.ep.49', 'exp/train_sp_pytorch_train/results/snapshot.ep.50']
+2020-07-06 10:06:39,486 (splitjson:43) INFO: /espnet/tools/venv/bin/python3 /espnet/egs/aishell/asr1/../../../utils/splitjson.py --parts 32 dump/test/deltafalse/data.json
+2020-07-06 10:06:39,512 (splitjson:43) INFO: /espnet/tools/venv/bin/python3 /espnet/egs/aishell/asr1/../../../utils/splitjson.py --parts 32 dump/dev/deltafalse/data.json
+2020-07-06 10:06:39,574 (splitjson:55) INFO: number of utterances = 7176
+2020-07-06 10:06:39,682 (splitjson:55) INFO: number of utterances = 14326
+2020-07-06 11:54:30,571 (concatjson:36) INFO: /espnet/tools/venv/bin/python3 /espnet/egs/aishell/asr1/../../../utils/concatjson.py exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.1.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.10.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.11.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.12.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.13.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.14.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.15.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.16.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.17.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.18.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.19.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.2.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.20.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.21.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.22.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.23.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.24.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.25.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.26.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.27.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.28.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.29.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.3.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.30.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.31.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.32.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.4.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.5.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.6.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.7.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.8.json exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.9.json
+2020-07-06 11:54:30,641 (concatjson:46) INFO: new json has 7176 utterances
+2020-07-06 11:54:31,412 (json2trn:44) INFO: /espnet/tools/venv/bin/python3 /espnet/egs/aishell/asr1/../../../utils/json2trn.py exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.json data/lang_1char/train_sp_units.txt --num-spkrs 1 --refs exp/train_sp_pytorch_train/decode_test_decode_lm_4/ref.trn --hyps exp/train_sp_pytorch_train/decode_test_decode_lm_4/hyp.trn
+2020-07-06 11:54:31,412 (json2trn:46) INFO: reading exp/train_sp_pytorch_train/decode_test_decode_lm_4/data.json
+2020-07-06 11:54:31,484 (json2trn:50) INFO: reading data/lang_1char/train_sp_units.txt
+write a CER (or TER) result in exp/train_sp_pytorch_train/decode_test_decode_lm_4/result.txt
+      | SPKR   | # Snt  # Wrd | Corr    Sub    Del    Ins    Err  S.Err |
+      | Sum/Avg| 7176  104765 | 93.6    6.2    0.2    0.1    6.5   43.8 |
+2020-07-06 12:42:12,917 (concatjson:36) INFO: /espnet/tools/venv/bin/python3 /espnet/egs/aishell/asr1/../../../utils/concatjson.py exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.1.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.10.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.11.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.12.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.13.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.14.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.15.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.16.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.17.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.18.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.19.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.2.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.20.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.21.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.22.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.23.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.24.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.25.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.26.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.27.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.28.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.29.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.3.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.30.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.31.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.32.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.4.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.5.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.6.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.7.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.8.json exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.9.json
+2020-07-06 12:42:13,084 (concatjson:46) INFO: new json has 14326 utterances
+2020-07-06 12:42:13,993 (json2trn:44) INFO: /espnet/tools/venv/bin/python3 /espnet/egs/aishell/asr1/../../../utils/json2trn.py exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.json data/lang_1char/train_sp_units.txt --num-spkrs 1 --refs exp/train_sp_pytorch_train/decode_dev_decode_lm_4/ref.trn --hyps exp/train_sp_pytorch_train/decode_dev_decode_lm_4/hyp.trn
+2020-07-06 12:42:13,993 (json2trn:46) INFO: reading exp/train_sp_pytorch_train/decode_dev_decode_lm_4/data.json
+2020-07-06 12:42:14,160 (json2trn:50) INFO: reading data/lang_1char/train_sp_units.txt
+write a CER (or TER) result in exp/train_sp_pytorch_train/decode_dev_decode_lm_4/result.txt
+      | SPKR   | # Snt  # Wrd | Corr    Sub    Del    Ins    Err  S.Err |
+      | Sum/Avg|14326  205341 | 94.1    5.8    0.2    0.1    6.0   42.0 |
+Finished
