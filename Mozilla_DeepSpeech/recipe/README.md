@@ -47,7 +47,9 @@ Please check a tiny model for training -> https://github.com/mozilla/DeepSpeech/
 The format of the input csv file is like:
 ```
 wav_filename,wav_filesize,transcript
-/DeepSpeech/data/ldc93s1/LDC93S1.wav,93638,she had your dark suit in greasy wash water all year
+/DeepSpeech/cn_corpus/aishell/data_aishell/test/S0914/BAC009S0914W0259.wav,199404,苹果推出的每一款新产品都不免要引发大讨论
+/DeepSpeech/cn_corpus/aishell/data_aishell/test/S0914/BAC009S0914W0171.wav,151212,规定外商投资建立房地产企业
+/DeepSpeech/cn_corpus/aishell/data_aishell/test/S0914/BAC009S0914W0219.wav,281834,促进城市内外交通便利衔接和城乡公共交通一体化发展
 ```
 
 If you have problem with hyperparameters, you can check with ```python DeepSpeech.py --helpfull```
