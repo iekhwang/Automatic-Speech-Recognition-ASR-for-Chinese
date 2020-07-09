@@ -7,7 +7,7 @@ This project is for the current avilable open-source end-to-end Mandarin ASRs, i
 -----
 
 - [Mozilla DeepSpeech](https://github.com/mozilla/DeepSpeech)  
-Please check the recipe for Mandarin -> [recipe for DeepSpeech](Mozilla_DeepSpeech/recipe)
+Please check the recipe for Mandarin -> [recipe for DeepSpeech](Mozilla_DeepSpeech/RECIPE.md)
 
 - [ESPnet](https://github.com/espnet/espnet) 
 
